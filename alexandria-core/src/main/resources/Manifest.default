@@ -1,0 +1,4 @@
+# Maven central repository
+REPOS "http://repo1.maven.org/maven2"
+CONF build-directory "output"
+CONF local-maven-repository "{build-directory}/m2"
