@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -19,6 +20,7 @@ import alexandria.core.resolver.Resolver;
 import alexandria.manifest.InvalidInstructionException;
 import alexandria.manifest.ManifestReader;
 
+@Ignore
 @RunWith( MockitoJUnitRunner.class )
 public class ManifestRunnerIntegrationTest {
 
@@ -34,7 +36,7 @@ public class ManifestRunnerIntegrationTest {
 
 	@Provided
 	ManifestRunner runner;
-	
+
 	@Provided
 	RuntimeContext context;
 
@@ -54,12 +56,12 @@ public class ManifestRunnerIntegrationTest {
 		assertTrue( context.repositoryList.contains(REPO_CENTRAL) );
 		assertTrue( context.repositoryList.contains(REPO_SONATYPE) );
 	}
-	
+
 	@Test
 	@SneakyThrows
 	public void ensureThatCanOverrideBuildDirectoryAndHaveCreatedIt(){
 		runCommands();
-		String buildDir = context.getProperty( ConfCommandFactory.BUILD_DIRECTORY );
+		final String buildDir = context.getProperty( ConfCommandFactory.BUILD_DIRECTORY );
 		assertEquals( "target/output", buildDir );
 		assertTrue( file( buildDir ).exists() );
 	}

@@ -1,7 +1,7 @@
 package alexandria.core;
 
 import static org.junit.Assert.assertEquals;
-import static power.util.Util.stringMap;
+import static power.util.Util.map;
 
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class StringPlaceholderReplacerTest {
 	}
 
 	Map<String, String> createParams() {
-		Map<String, String> params = stringMap();
+		final Map<String, String> params = map();
 		params.put( "HOME", "/home/linus" );
 		params.put( "LOCALE", "pt_BR" );
 		return params;

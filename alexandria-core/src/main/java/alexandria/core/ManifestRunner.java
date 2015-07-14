@@ -14,16 +14,19 @@ import alexandria.manifest.ManifestInstruction;
 @Singleton
 public class ManifestRunner {
 
+	private static final String ERROR = "ERROR";
+	private static final String SUCCESS = "SUCCESS";
+
 	@Provided
 	RuntimeContext context;
 
 	@Provided
 	ServiceProvider provider;
-	
+
 	boolean readDefaultConfiguration = false;
 
 	public void read( Iterable<ManifestInstruction> instructions ) {
-		for ( ManifestInstruction instruction : instructions )
+		for ( final ManifestInstruction instruction : instructions )
 			tryToFindPluginFor( ContextualManifestInstruction.wrap( context.getProperties(), instruction ) );
 	}
 
@@ -41,26 +44,26 @@ public class ManifestRunner {
 		try {
 			for ( val plugin : context.getRunnablePlugins() )
 				plugin.run();
-			showFinishMessage( "SUCCESS" );
+			showFinishMessage( SUCCESS );
 		// UNCHECKED: Should handle any thrown exception here
-		} catch ( Throwable cause ) {
+		} catch ( final Throwable cause ) {
 		// CHECKED
 			handleErrorAndFinish(cause);
 		}
 	}
 
 	void showPackageDescription(){
-		PackageDescription desc = context.getPackageDescription();
+		final PackageDescription desc = context.getPackageDescription();
 		log.info( "----------------------------------------------------" );
 		log.info( " " + desc.getMaintainer() );
 		log.info( str(" %s - %s", desc.getName(), desc.getVersion() ) );
 		log.info( "----------------------------------------------------" );
 		log.info( "" );
 	}
-	
+
 	void handleErrorAndFinish( Throwable cause ) {
 		log.error( "Can't finish the build", cause);
-		showFinishMessage( "ERROR" );
+		showFinishMessage( ERROR );
 	}
 
 	void showFinishMessage( String status ){
